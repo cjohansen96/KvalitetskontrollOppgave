@@ -16,17 +16,11 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
-    }
+        // Get brands
+        $brand = Brand::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        // Return collection of brands as resource
+        return BrandResource::collection($brand);
     }
 
     /**
@@ -47,39 +41,18 @@ class BrandController extends Controller
             return new BrandResource($brand);
         }
     }
-
+    
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function show(Brand $brand)
+    public function show($id)
     {
-        //
-    }
+        $brand = Brand::findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Brand $brand)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Brand $brand)
-    {
-        //
+        return new BrandResource($brand);
     }
 
     /**

@@ -16,17 +16,11 @@ class VehicleModelController extends Controller
      */
     public function index()
     {
-        //
-    }
+        // Get vehicle_models
+        $vehicle_models = VehicleModel::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        // Return collection of vehicle_models as resource
+        return VehicleModelResource::collection($vehicle_models);
     }
 
     /**
@@ -49,39 +43,18 @@ class VehicleModelController extends Controller
             return new VehicleModelResource($vehicleModel);
         }
     }
-
+    
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\VehicleModel  $vehicleModel
      * @return \Illuminate\Http\Response
      */
-    public function show(VehicleModel $vehicleModel)
+    public function show($id)
     {
-        //
-    }
+        $vehicleModel = VehicleModel::findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\VehicleModel  $vehicleModel
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(VehicleModel $vehicleModel)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\VehicleModel  $vehicleModel
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, VehicleModel $vehicleModel)
-    {
-        //
+        return new VehicleModelResource($vehicleModel);
     }
 
     /**
