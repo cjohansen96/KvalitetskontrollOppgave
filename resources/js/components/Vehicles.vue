@@ -36,19 +36,27 @@
                     <button v-on:click="createVehicle()" type="button" class="btn btn-success">Registrer kjøretøy</button>
         </form>
 
+        <!-- Sortering -->
+        <form class="mb-4">
+            <label class="font-weight-bold">Sorter på merker:</label>
+            <div v-for="brand in brands" v-bind:key="brand.id" class="form-check">
+                <input v-bind:value="brand.id" v-model="userSelectedBrands" type="checkbox"  class="form-check-input" >
+                <label class="form-check-label">{{brand.name}}</label>
+            </div>
+        </form>
         <!-- Cards for vehicles -->
         <div v-if="isFetched" class="card" style="width: 18rem;">
             <div v-for="vehicle in vehicles" v-bind:key="vehicle.id" class="card-body">
                 <h4 class="card-title">{{vehicle.vehicle_model_name}}</h4>
                 <h5 class="card-subtitle mb-2 text-muted">{{vehicle.brand_name}}</h5>
-                    <h6 class="card-subtitle mb-2">Registreringsnummer: {{vehicle.license_plate}}</h6>
-                    <h6 class="card-subtitle mb-2">Årsmodell: {{vehicle.year_model}}</h6>
-                    <h6 class="card-subtitle mb-2">Kilometerstand: {{vehicle.mileage}}km</h6>
-                    <h6 class="card-subtitle mb-2">Registreringsdato: {{vehicle.registration_date}}</h6>
-                    <h6 class="card-subtitle mb-2" v-if="vehicle.veteran">Veteran: Ja</h6>
-                    <h6 class="card-subtitle mb-2" v-else>Veteran: Nei</h6>
-                    <button type="button" class="btn btn-warning"><router-link to="/rediger">Rediger</router-link></button>
-                    <button v-on:click="deleteVehicle(vehicle.id)" type="button" class="btn btn-danger">Slett</button>
+                <h6 class="card-subtitle mb-2">Registreringsnummer: {{vehicle.license_plate}}</h6>
+                <h6 class="card-subtitle mb-2">Årsmodell: {{vehicle.year_model}}</h6>
+                <h6 class="card-subtitle mb-2">Kilometerstand: {{vehicle.mileage}}km</h6>
+                <h6 class="card-subtitle mb-2">Registreringsdato: {{vehicle.registration_date}}</h6>
+                <h6 class="card-subtitle mb-2" v-if="vehicle.veteran">Veteran: Ja</h6>
+                <h6 class="card-subtitle mb-2" v-else>Veteran: Nei</h6>
+                <button type="button" class="btn btn-warning"><router-link to="/rediger">Rediger</router-link></button>
+                <button v-on:click="deleteVehicle(vehicle.id)" type="button" class="btn btn-danger">Slett</button>
             </div>
         </div>
     </div>
@@ -60,6 +68,7 @@
             return {
                 vehicles : [],
                 brands: [],
+                userSelectedBrands: [],
 
                 isFetched : false,
                 status: "",
@@ -79,8 +88,19 @@
         },
 
         created() {
-            this.getBrands();
             this.getVehicles();
+            this.getBrands();
+        },
+
+        watch: {
+            userSelectedBrands: function() {
+                if(this.userSelectedBrands.length === 0) {
+                    this.getVehicles();
+                }
+                else {
+                    this.getVehiclesSortedByBrands();
+                }
+            }
         },
 
         methods: {
@@ -97,6 +117,7 @@
                 axios.get("api/brands").then(
                     result => {
                         this.brands = result.data.data
+                        
                     }
                 );
             },
@@ -132,7 +153,23 @@
                     console.log(error);
                 });
                 
-            }
+            },
+            getVehiclesSortedByBrands() {
+                const sortedVehicles = [];
+
+                this.vehicles.forEach((e1)=>this.userSelectedBrands.forEach((e2)=>
+                    {
+                    if(e1.brand_id == e2){
+                        sortedVehicles.push(e1);
+                    }
+                    }
+                ));
+                this.vehicles = sortedVehicles;
+
+                },
+                    removeUserselectedBrands(index) {
+                    this.userSelectedBrands.splice(index, 1);
+                }
         }
     }
 </script>

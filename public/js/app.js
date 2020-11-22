@@ -2021,11 +2021,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       vehicles: [],
       brands: [],
+      userSelectedBrands: [],
       isFetched: false,
       status: "",
       isCreateVehicle: false,
@@ -2042,8 +2051,17 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.getBrands();
     this.getVehicles();
+    this.getBrands();
+  },
+  watch: {
+    userSelectedBrands: function userSelectedBrands() {
+      if (this.userSelectedBrands.length === 0) {
+        this.getVehicles();
+      } else {
+        this.getVehiclesSortedByBrands();
+      }
+    }
   },
   methods: {
     getVehicles: function getVehicles() {
@@ -2091,6 +2109,22 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    getVehiclesSortedByBrands: function getVehiclesSortedByBrands() {
+      var _this4 = this;
+
+      var sortedVehicles = [];
+      this.vehicles.forEach(function (e1) {
+        return _this4.userSelectedBrands.forEach(function (e2) {
+          if (e1.brand_id == e2) {
+            sortedVehicles.push(e1);
+          }
+        });
+      });
+      this.vehicles = sortedVehicles;
+    },
+    removeUserselectedBrands: function removeUserselectedBrands(index) {
+      this.userSelectedBrands.splice(index, 1);
     }
   }
 });
@@ -38063,6 +38097,65 @@ var render = function() {
           )
         ])
       : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "form",
+      { staticClass: "mb-4" },
+      [
+        _c("label", { staticClass: "font-weight-bold" }, [
+          _vm._v("Sorter på merker:")
+        ]),
+        _vm._v(" "),
+        _vm._l(_vm.brands, function(brand) {
+          return _c("div", { key: brand.id, staticClass: "form-check" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.userSelectedBrands,
+                  expression: "userSelectedBrands"
+                }
+              ],
+              staticClass: "form-check-input",
+              attrs: { type: "checkbox" },
+              domProps: {
+                value: brand.id,
+                checked: Array.isArray(_vm.userSelectedBrands)
+                  ? _vm._i(_vm.userSelectedBrands, brand.id) > -1
+                  : _vm.userSelectedBrands
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.userSelectedBrands,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = brand.id,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.userSelectedBrands = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.userSelectedBrands = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.userSelectedBrands = $$c
+                  }
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { staticClass: "form-check-label" }, [
+              _vm._v(_vm._s(brand.name))
+            ])
+          ])
+        })
+      ],
+      2
+    ),
     _vm._v(" "),
     _vm.isFetched
       ? _c(
