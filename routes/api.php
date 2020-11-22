@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Vehicles
+
+// List vehicles
+Route::get('vehicles', 'App\Http\Controllers\VehicleController@index');
