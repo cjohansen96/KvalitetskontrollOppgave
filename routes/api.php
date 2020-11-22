@@ -32,5 +32,14 @@ Route::put('brand', 'App\Http\Controllers\BrandController@store');
 // Delete brand
 Route::delete('brand/{id}', 'App\Http\Controllers\BrandController@destroy');
 
+// Create a new Vehicle_models
+Route::post('vehicle_model', 'App\Http\Controllers\VehicleModelController@store');
+
+// Edit Vehicle_models
+Route::put('vehicle_model', 'App\Http\Controllers\VehicleModelController@store');
+
+// Delete Vehicle_models
+Route::delete('vehicle_model/{id}', 'App\Http\Controllers\VehicleModelController@destroy');
+
 // Vehicle_models
 Route::get('vehicle_model', 'App\Http\Controllers\VehicleModelController@index');
