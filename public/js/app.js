@@ -2017,10 +2017,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       vehicles: [],
+      brands: [],
       isFetched: false,
       status: "",
       isCreateVehicle: false,
@@ -2037,6 +2042,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
+    this.getBrands();
     this.getVehicles();
   },
   methods: {
@@ -2048,20 +2054,27 @@ __webpack_require__.r(__webpack_exports__);
         _this.isFetched = true;
       });
     },
-    deleteVehicle: function deleteVehicle(vehicleId) {
+    getBrands: function getBrands() {
       var _this2 = this;
 
-      axios["delete"]("api/vehicle/" + vehicleId).then(function (result) {
-        _this2.getVehicles();
+      axios.get("api/brands").then(function (result) {
+        _this2.brands = result.data.data;
+      });
+    },
+    deleteVehicle: function deleteVehicle(vehicleId) {
+      var _this3 = this;
 
-        _this2.status = "Kjøretøy slettet!";
+      axios["delete"]("api/vehicle/" + vehicleId).then(function (result) {
+        _this3.getVehicles();
+
+        _this3.status = "Kjøretøy slettet!";
       });
     },
     createVehicle: function createVehicle() {
       axios({
         method: 'post',
-        url: 'api/vehicle/',
-        data: {
+        url: 'api/vehicle',
+        data: JSON.stringify({
           brand_id: this.vehicle.brand_id,
           vehicle_model_id: this.vehicle.vehicle_model_id,
           license_plate: this.vehicle.license_plate,
@@ -2069,7 +2082,7 @@ __webpack_require__.r(__webpack_exports__);
           mileage: this.vehicle.mileage,
           registration_date: this.vehicle.registration_date,
           veteran: this.vehicle.veteran
-        },
+        }),
         headers: {
           'Content-Type': 'text/plain;charset=utf-8'
         }
@@ -37898,6 +37911,38 @@ var render = function() {
                     return
                   }
                   _vm.$set(_vm.vehicle, "license_plate", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "formGroupExampleInput2" } }, [
+              _vm._v("Årsmodell")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.vehicle.year_model,
+                  expression: "vehicle.year_model"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                id: "formGroupExampleInput2",
+                placeholder: "årsmodell"
+              },
+              domProps: { value: _vm.vehicle.year_model },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.vehicle, "year_model", $event.target.value)
                 }
               }
             })

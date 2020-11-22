@@ -42,7 +42,7 @@ Route::delete('vehicle/{id}', 'App\Http\Controllers\VehicleController@destroy');
 */
 
 // List brands
-Route::get('brand', 'App\Http\Controllers\BrandController@index');
+Route::get('brands', 'App\Http\Controllers\BrandController@index');
 
 // List one brand
 Route::get('brand/{id}', 'App\Http\Controllers\BrandController@show');
