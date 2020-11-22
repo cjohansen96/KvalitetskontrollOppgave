@@ -17,7 +17,7 @@ class CreateVehicleModelsTable extends Migration
             $table->id();
             $table->string('name');
             $table->smallInteger('seats');
-            $table->string('drivstofftype');
+            $table->string('fuel_type');
         });
     }
 
