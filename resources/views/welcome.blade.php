@@ -26,21 +26,18 @@
         
         <div id="app">
             <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
                 <a class="navbar-brand" href="#">Kjøretøyregister</a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav">
                     <li class="nav-item">
-                      <a class="nav-link"><router-link to="/">Hjem</router-link></a>
+                      <a class="nav-link"><router-link to="/">Kjøretøy</router-link></a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link"><router-link to="/redigermerker">Rediger merker</router-link></a>
+                      <a class="nav-link"><router-link to="/merker">Merker</router-link></a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link"><router-link to="/redigermodeller">Rediger modeller</router-link></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link"><router-link to="/redigerkjøretøy">Rediger kjøretøy</router-link></a>
+                      <a class="nav-link"><router-link to="/modeller">Modeller</router-link></a>
                     </li>
                   </ul>
                 </div>

@@ -1,7 +1,7 @@
 import Vehicles from './components/Vehicles'
-import EditVehicles from './components/EditVehicles'
-import EditVehicleModels from './components/EditVehicleModels'
-import EditBrands from './components/EditBrands'
+import Edit from './components/Edit'
+import VehicleModels from './components/VehicleModels'
+import Brands from './components/Brands'
 
 export default [
     {
@@ -9,15 +9,15 @@ export default [
         component: Vehicles
     },
     {
-        path: '/redigerkjøretøy',
-        component: EditVehicles
+        path: '/modeller',
+        component: VehicleModels
     },
     {
-        path: '/redigermodeller',
-        component: EditVehicleModels
+        path: '/merker',
+        component: Brands
     },
     {
-        path: '/redigermerker',
-        component: EditBrands
+        path: '/rediger',
+        component: Edit
     },
 ]
