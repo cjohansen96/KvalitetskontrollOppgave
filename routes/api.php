@@ -23,6 +23,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // List vehicles
 Route::get('vehicles', 'App\Http\Controllers\VehicleController@index');
 
+// Create a new vehicle
+Route::post('vehicle', 'App\Http\Controllers\VehicleController@store');
+
+// Edit vehicle
+Route::put('vehicle', 'App\Http\Controllers\VehicleController@store');
+
+// Delete vehicle
+Route::delete('vehicle/{id}', 'App\Http\Controllers\VehicleController@destroy');
+
 // Create a new brand
 Route::post('brand', 'App\Http\Controllers\BrandController@store');
 

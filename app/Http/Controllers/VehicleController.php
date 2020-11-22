@@ -41,7 +41,21 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $vehicle = $request->isMethod('put') ? Vehicle::findOrFail
+        ($request->id) : new Vehicle;
+
+        $vehicle->id = $request->input('id');
+        $vehicle->brand_id = $request->input('brand_id');
+        $vehicle->vehicle_model_id = $request->input('vehicle_model_id');
+        $vehicle->license_plate = $request->input('license_plate');
+        $vehicle->year_model = $request->input('year_model');
+        $vehicle->mileage = $request->input('mileage');
+        $vehicle->registration_date = $request->input('registration_date');
+        $vehicle->veteran = $request->input('veteran');
+
+        if($vehicle->save()){
+            return new VehicleResource($vehicle);
+        }
     }
 
     /**
@@ -84,8 +98,12 @@ class VehicleController extends Controller
      * @param  \App\Models\Vehicle  $vehicle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vehicle $vehicle)
+    public function destroy($id)
     {
-        //
+        $vehicle = Vehicle::findOrFail($id);
+
+        if($vehicle->delete()) {
+            return new VehicleResource($vehicle);
+        }
     }
 }
